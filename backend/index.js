@@ -16,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+connectDB();
 const corsOptions = {
     origin:'https://job-portal-gpt0.onrender.com',
     credentials:true
@@ -41,6 +42,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.listen(PORT,()=>{
-    connectDB();
+    
     console.log(`Server running at port ${PORT}`);
 })
