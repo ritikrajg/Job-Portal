@@ -24,13 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
-if (process.env.NODE_ENV === "production") {
-    const dirPath = path.resolve();
-    app.use(express.static("./frontend/dist"))
-    app.get("*",(req,res)=>{
-      res.sendFile(path.resolve(dirPath,"./frontend/dist","index.html"))
-    })
-}
+
 
 // api's
 app.use("/api/v1/user", userRoute);
@@ -38,7 +32,13 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-
+if (process.env.NODE_ENV === "production") {
+    const dirPath = path.resolve();
+    app.use(express.static("./frontend/dist"))
+    app.get("*",(req,res)=>{
+      res.sendFile(path.resolve(dirPath,"./frontend/dist","index.html"))
+    })
+}
 
 app.listen(PORT,()=>{
     connectDB();
